@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Query
-from athena_client import run_query
+from client import run_query
 
 router = APIRouter()
 
