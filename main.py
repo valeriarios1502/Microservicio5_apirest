@@ -1,7 +1,6 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-import awswrangler as wr
 import boto3
 import os
 import logging
@@ -11,8 +10,6 @@ from routers import peliculas, usuarios, foros
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-DATABASE = os.getenv("ATHENA_DATABASE", "glue_datalake")
-S3_OUTPUT = os.getenv("ATHENA_S3_OUTPUT", "s3://cinetrack-results/")
 AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
 
 
@@ -22,6 +19,7 @@ async def lifespan(app: FastAPI):
     boto3.setup_default_session(region_name=AWS_REGION)
     yield
     logger.info("🛑 Cerrando API...")
+
 
 app = FastAPI(
     title="Analytics API - Datalake Películas",
