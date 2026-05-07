@@ -43,6 +43,7 @@ def usuarios_peliculas_vistas(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+
 @router.get("/resumen", summary="Resumen estadístico de usuarios")
 def resumen_usuarios():
     """
