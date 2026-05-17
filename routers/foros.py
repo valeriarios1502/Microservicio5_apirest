@@ -13,7 +13,7 @@ def foros_mas_activos():
         SELECT
             threadid    AS foro_id,
             COUNT(id)   AS total_mensajes
-        FROM glue_datalake.messages
+        FROM glue_datalake.messages_csv
         GROUP BY threadid
         ORDER BY total_mensajes DESC
         LIMIT 10
@@ -57,7 +57,7 @@ def resumen_foros():
             ROUND(AVG(mensajes_por_foro), 2) AS promedio_mensajes_por_foro
         FROM (
             SELECT threadid, COUNT(id) AS mensajes_por_foro
-            FROM glue_datalake.messages
+            FROM glue_datalake.messages_csv
             GROUP BY threadid
         ) sub
     """
