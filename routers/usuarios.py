@@ -11,7 +11,7 @@ def usuarios_por_pais():
     """
     sql = """
         SELECT pais, COUNT(*) AS total_usuarios
-        FROM glue_datalake.usuarios
+        FROM glue_datalake.usuarios_csv
         GROUP BY pais
         ORDER BY total_usuarios DESC
     """
@@ -31,7 +31,7 @@ def usuarios_peliculas_vistas(
     sql = f"""
         SELECT u.id AS usuario_id, u.name AS nombre, u.pais,
                COUNT(pv.pelicula_id) AS peliculas_vistas
-        FROM glue_datalake.usuarios u
+        FROM glue_datalake.usuarios_csv u
         LEFT JOIN glue_datalake.peliculas_vistas pv ON u.id = pv.usuario_id
         GROUP BY u.id, u.name, u.pais
         ORDER BY peliculas_vistas DESC
@@ -53,7 +53,7 @@ def resumen_usuarios():
         SELECT
             COUNT(*)           AS total_usuarios,
             COUNT(DISTINCT pais) AS paises_unicos
-        FROM glue_datalake.usuarios
+        FROM glue_datalake.usuarios_csv
     """
     try:
         return {"data": run_query(sql)}
