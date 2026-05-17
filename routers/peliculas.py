@@ -11,7 +11,7 @@ def top_peliculas_calificadas():
     """
     sql = """
         SELECT id, title, year, rating
-        FROM glue_datalake.movies
+        FROM glue_datalake.movies_csv
         ORDER BY rating DESC
         LIMIT 10
     """
@@ -50,8 +50,8 @@ def actores_top():
     """
     sql = """
         SELECT a.name AS actor, a.nationality AS nacionalidad, COUNT(*) AS total_peliculas
-        FROM glue_datalake.movie_actors ma
-        JOIN glue_datalake.actors a ON ma.actor_id = a.id
+        FROM glue_datalake.movie_actors_csv ma
+        JOIN glue_datalake.actors_csv a ON ma.actor_id = a.id
         GROUP BY a.name, a.nationality
         ORDER BY total_peliculas DESC
         LIMIT 10
@@ -69,8 +69,8 @@ def peliculas_por_genero():
     """
     sql = """
         SELECT g.name AS genero, COUNT(*) AS total_peliculas
-        FROM glue_datalake.movie_genres mg
-        JOIN glue_datalake.genres g ON mg.genre_id = g.id
+        FROM glue_datalake.movie_genres_csv mg
+        JOIN glue_datalake.genres_csv g ON mg.genre_id = g.id
         GROUP BY g.name
         ORDER BY total_peliculas DESC
     """
@@ -89,8 +89,8 @@ def directores_top(
     """
     sql = f"""
         SELECT d.name AS director, COUNT(*) AS total_peliculas
-        FROM glue_datalake.movie_directors md
-        JOIN glue_datalake.directors d ON md.director_id = d.id
+        FROM glue_datalake.movie_directors_csv md
+        JOIN glue_datalake.directors_csv d ON md.director_id = d.id
         GROUP BY d.name
         ORDER BY total_peliculas DESC
         LIMIT {limit}
