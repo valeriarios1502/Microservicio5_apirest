@@ -13,7 +13,7 @@ athena = boto3.client("athena", region_name=AWS_REGION)
 
 
 def run_query(sql: str) -> list[dict]:
-    logger.info(f"▶ Ejecutando query Athena:\n{sql}")
+    logger.info(f"Ejecutando query Athena:\n{sql}")
 
     response = athena.start_query_execution(
         QueryString=sql,
@@ -34,7 +34,7 @@ def run_query(sql: str) -> list[dict]:
 
         time.sleep(1)
     else:
-        raise RuntimeError("Query Athena timeout después de 60 segundos")
+        raise RuntimeError("Query Athena timeout")
 
     results = athena.get_query_results(QueryExecutionId=query_id)
     rows = results["ResultSet"]["Rows"]
@@ -49,6 +49,4 @@ def run_query(sql: str) -> list[dict]:
             columns[i]: cell.get("VarCharValue", None)
             for i, cell in enumerate(row["Data"])
         })
-
-    logger.info(f"{len(data)} filas obtenidas")
     return data
