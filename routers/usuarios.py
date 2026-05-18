@@ -6,9 +6,6 @@ router = APIRouter()
 
 @router.get("/por-pais", summary="Usuarios agrupados por país")
 def usuarios_por_pais():
-    """
-    Devuelve el conteo de usuarios por país, ordenado de mayor a menor.
-    """
     sql = """
         SELECT pais, COUNT(*) AS total_usuarios
         FROM glue_datalake.usuarios_csv
@@ -25,9 +22,6 @@ def usuarios_por_pais():
 def usuarios_peliculas_vistas(
     limit: int = Query(default=10, ge=1, le=100)
 ):
-    """
-    Lista los usuarios que han marcado más películas como vistas.
-    """
     sql = f"""
         SELECT u.id AS usuario_id, u.name AS nombre, u.pais,
                COUNT(pv.pelicula_id) AS peliculas_vistas
@@ -46,9 +40,6 @@ def usuarios_peliculas_vistas(
 
 @router.get("/resumen", summary="Resumen estadístico de usuarios")
 def resumen_usuarios():
-    """
-    Estadísticas generales: total de usuarios, países únicos.
-    """
     sql = """
         SELECT
             COUNT(*)           AS total_usuarios,
