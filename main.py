@@ -10,19 +10,19 @@ from routers import peliculas, usuarios, foros
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
+AWS_REGION = os.getenv("AWS_REGION")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("🚀 Iniciando API Analytics Datalake...")
+    logger.info("Iniciando API Analytics Datalake")
     boto3.setup_default_session(region_name=AWS_REGION)
     yield
-    logger.info("🛑 Cerrando API...")
+    logger.info("Cerrando API...")
 
 
 app = FastAPI(
-    title="Analytics API - Datalake Películas",
+    title="Analytics API - Datalake",
     description="API REST para consultas analíticas sobre el datalake de películas, usuarios y foros.",
     version="1.0.0",
     lifespan=lifespan,
